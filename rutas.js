@@ -1,12 +1,13 @@
 const express = require('express')
 const routes = express.Router()
+const mysql = require('mysql2')
 const cors = require('cors');
 
 routes.use(cors({
     origin:'*'
 }));
 
-
+//GET
 routes.get('/', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
@@ -19,11 +20,14 @@ routes.get('/', (req, res)=>{
     })
 })
 
-routes.get('/', (req, res) =>{
+//SEARCH
+routes.post('/search', (req, res) =>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-
-        conn.query('SELECT * FROM WHERE ? = ?', [req.body], (err, rows)=>{
+        // console.log([req.body]);
+        const { name } = req.body;
+        
+        conn.query(`SELECT email, subject, message FROM contact WHERE name='${name}'`, [], (err, rows)=>{
             if(err) return res.send(err)
 
             res.json(rows)
@@ -31,6 +35,8 @@ routes.get('/', (req, res) =>{
     })
 })
 
+
+//POST
 routes.post('/', (req, res) => {
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
@@ -42,10 +48,13 @@ routes.post('/', (req, res) => {
     })
 })
 
-routes.delete('/:id', (req, res)=>{
+
+//DELETE
+routes.delete('/delete', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
-        conn.query('DELETE FROM contact WHERE id = ?', [req.params.id], (err, rows)=>{
+        console.log([req.body]);
+        conn.query('DELETE FROM contact WHERE ?', [req.body], (err, rows)=>{
             if(err) return res.send(err)
 
             res.send('Deleted!')
