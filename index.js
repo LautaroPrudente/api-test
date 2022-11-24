@@ -8,13 +8,13 @@ const routes = require('./rutas')
 let app = express()
 
 app.set('port', process.env.PORT || 3000)
-// const dbOptions = {
-//     host: 'localhost',
-//     port: 5000,
-//     user: 'root',
-//     password: 'lol123',
-//     database: 'formapi'
-// }
+const dbOptions = {
+    host: 'localhost',
+    port: 5000,
+    user: 'root',
+    password: 'lol123',
+    database: 'formapi'
+}
 
 app.use(cors({
     origin:'*'
