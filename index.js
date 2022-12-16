@@ -27,6 +27,8 @@ app.use(express.json())
 app.get('/', (req, res)=>{
     res.send('API Mapache')
 })
+
+
 app.use('/api', routes)
 
 
